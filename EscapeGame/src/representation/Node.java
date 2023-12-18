@@ -1,6 +1,6 @@
 package representation;
 
-import univers.Personage;
+import univers.persTypes.Personage;
 
 public abstract class Node {
 	
@@ -41,6 +41,16 @@ public abstract class Node {
 	 * @return Node
 	 */
 	public Node chooseNext(Personage player, Personage opponent) {
+		return null;
+	}
+	
+	/**
+	 * returns the next node according to whether 
+	 * the player's inventory contains a certain item or not
+	 * @param player
+	 * @return Node
+	 */
+	public Node chooseNext(Personage player) {
 		return null;
 	}
 	

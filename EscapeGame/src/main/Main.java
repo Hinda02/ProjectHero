@@ -2,11 +2,21 @@ package main;
 
 import java.util.ArrayList;
 
+
 import java.util.List;
 import java.util.Scanner;
 
 import representation.*;
 import univers.*;
+import univers.Tools.Weapon;
+import univers.Tools.EGrade;
+import univers.Tools.Item;
+import univers.persTypes.Angel;
+import univers.persTypes.Demon;
+import univers.persTypes.Enemy;
+import univers.persTypes.Human;
+import univers.persTypes.Mage;
+import univers.persTypes.Personage;
 
 
 public class Main {
@@ -15,15 +25,15 @@ public class Main {
 		
 		// Characters
 		
-		Personage cerberus = new Enemy("Cerberus",Weapon.NULL,1000, 1000);
-		Personage charon = new Enemy("Charon",Weapon.Aegis,1000, 1000);
-		Personage hades = new Enemy("Hades",Weapon.Varatha,1200, 1500);
+		Personage cerberus = new Enemy("Cerberus", Weapon.NULL, EGrade.Minion, 10, 100);
+		Personage charon = new Enemy("Charon", Weapon.Aegis, EGrade.General, 1000, 1000);
+		Personage hades = new Enemy("Hades", Weapon.Varatha, EGrade.Supreme, 1200, 1500);
 		
 		// Intro to Story 
 		
-		System.out.println("Zeus a perdu son éclair divin ! Il est sûr que quelqu'un l'a volé pour \nréaliser de mauvais desseins. Il promet d'exaucer le voeu de celui ou celle qui le lui rendra.");
-		System.out.println("Vous décidez d'accepter cette quête. ");
-		System.out.println("Vos recherches vous amènent jusqu'aux Enfers, le territoire d'Hades. \nPour entrer il vous faudra passer les serviteurs du roi des Enfers, notamment : \nCerberus et Charon. La première étape est Cerberus");
+		System.out.println("Zeus a perdu son ï¿½clair divin ! Il est sï¿½r que quelqu'un l'a volï¿½ pour \nrï¿½aliser de mauvais desseins. Il promet d'exaucer le voeu de celui ou celle qui le lui rendra.");
+		System.out.println("Vous dï¿½cidez d'accepter cette quï¿½te. ");
+		//System.out.println("Vos recherches vous amï¿½nent jusqu'aux Enfers, le territoire d'Hades. \nPour entrer il vous faudra passer les serviteurs du roi des Enfers, notamment : \nCerberus et Charon. La premiï¿½re ï¿½tape est Cerberus");
 		
 		
 		// Choice of character data
@@ -56,7 +66,7 @@ public class Main {
 		//get player input
 		nom = myObj.next();
 		
-		System.out.println("Choisis ton arme: (Saisissez le numéro de l'arme)");
+		System.out.println("Choisis ton arme: (Saisissez le numï¿½ro de l'arme)");
 		int i = 0;
 		for(Weapon item : weapons) {
 			i++;
@@ -69,77 +79,124 @@ public class Main {
 		
 	    //Initialize a player
 		Personage player = null;
+		
+		
+		
+		
+		// Nodes (story line)
+	    // Petite histoire TEST
+	    // 1- Le joueur se trouve face ï¿½ un ennemi (Cerberus)
+	    // 2- Il fait son premier choix de l'attaquer ou de faire diversion
+	    // 3- Cas diversion: il rï¿½ussira ou ï¿½chouera alï¿½atoirement (ChanceNode)
+	    // 4- Cas attaque: il faut calculer correctement pour se battre (InnerNode)
+		
+		Node node15 = new TerminalNode(15, "Dead face a Hades");
+		Node node14 = new TerminalNode(14, "eclaire de zeus");
+		Node node12 = new InnerNode(12, "Combattre Hades", node14, node15);
+		Node node10 = new ChanceNode(10, "Hades", node14, node12);
+        Node node5 = new TerminalNode(5, "Votre diversion ï¿½tait parfaite. Malheureusement, vous \ntrï¿½buchez sur une pierre et Cerberus vous attrape! Partie perdue!");
+        Node node13 = new TerminalNode(13, "Dead face a charon");
+	    Node node4 = new InnerNode(4, "Fï¿½licitations ! Votre diversion a fonctionnï¿½.combat contre charon", node10, node13);
+	    Node node9 = new InnerNode(9, "Utiliser l'obole", node10, node4);
+        Node node6 = new InnerNode(6, "Vous avez gagnï¿½ le combat! ;) cerberus dropped an item that will help beat charon. write its name to pick it up.", node9, node4);
+        Node node7 = new TerminalNode(7, "Cerberus vous a battu! :(");
+        Node node2 = new ChanceNode(2, "Vous dï¿½cidez de faire diversion", node4, node5);
+        Node node3 = new InnerNode(3, "Vous dï¿½cidez de combattre Cerberus", node6, node7);
+	    Node node1 = new DecisionNode(1, "Vous vous retrouvez devant la taniï¿½re de Cerberus, que \nsouhaitez vous faire ? Le combattre ou Faire diversion ?", node2, node3);
+		
+		/*ArrayList<Node> nodes = new ArrayList<Node>();
+		nodes.add(node1);
+		nodes.add(node2);
+		nodes.add(node3);
+		nodes.add(node4);
+		nodes.add(node5);
+		nodes.add(node6);
+		nodes.add(node7);
+		nodes.add(node8);
+		nodes.add(node9);
+		nodes.add(node10);
+		nodes.add(node11);
+		nodes.add(node12);
+		nodes.add(node13);
+		nodes.add(node14);
+		nodes.add(node15);*/
+		
+		
+		//Initialize a currentNode
+		Node currentNode = null;
+		
 		//Create player object
 	    switch(choice) {
 	    
 		    case "Humain":
 		    	player = new Human(nom, w);
+		    	currentNode = node1;
 		    	break;
 		    	
 		    case "Mage":
 		    	player = new Mage(nom, w);
+		    	currentNode = node1;
 		    	break;
 		    	
 		    case "Ange":
 		    	player = new Angel(nom, w);
+		    	currentNode = node1;
 		    	break;
 		    	
 		    case "Demon":
 		    	player = new Demon(nom, w);
+		    	currentNode = node1;
 		    	break;
 		    	
 		    default:
 		    	player = new Human(nom, w);
+		    	currentNode = node1;
 		    	break;
 	    }
 		
 		
 		//Display player data
-	    System.out.println(player.toString());
-		
-		
-		// Nodes (story line)
-	    // Petite histoire TEST
-	    // 1- Le joueur se trouve face à un ennemi (Cerberus)
-	    // 2- Il fait son premier choix de l'attaquer ou de faire diversion
-	    // 3- Cas diversion: il réussira ou échouera aléatoirement (ChanceNode)
-	    // 4- Cas attaque: il faut calculer correctement pour se battre (InnerNode)
-	    
-	    Node node4 = new TerminalNode(4, "Félicitations ! Votre diversion a fonctionné. En vous \naventurant plus profondément dans les Enfers, vous vous retrouvez face à l'éclair de Zeus! Partie gagnée! ");
-        
-        Node node5 = new TerminalNode(5, "Votre diversion était parfaite. Malheureusement, vous \ntrébuchez sur une pierre et Cerberus vous attrape! Partie perdue!");
-        
-        Node node6 = new TerminalNode(6, "Vous avez gagné le combat! ;)");
-        
-        Node node7 = new TerminalNode(7, "Cerberus vous a battu! :(");
-        
-        Node node2 = new ChanceNode(2, "Vous décidez de faire diversion", node4, node5);
-        
-        Node node3 = new InnerNode(3, "Vous décidez de combattre Cerberus", node6, node7);
-	    
-	    Node node1 = new DecisionNode(1, "Vous vous retrouvez devant la tanière de Cerberus, que \nsouhaitez vous faire ? Le combattre ou Faire diversion ?", 
-                node2,
-                node3);
-	    
-      
-        
+	    System.out.println(player.toString()); 
         
 
+	    
+	    
        //Main Code (Game)
 	    
-	    Node actualNode = node1;
 	    System.out.println();
-	    actualNode.display();
-	    actualNode = actualNode.chooseNext();
+	    currentNode.display();
+	    currentNode = currentNode.chooseNext();
 	    
-	    if(!(actualNode instanceof DecisionNode) && !(actualNode instanceof ChanceNode)) {
-	    	actualNode = actualNode.chooseNext(player, cerberus);
+	    while(!(currentNode instanceof TerminalNode)) {
 	    	
-	    }else {
-	    	actualNode = actualNode.chooseNext();
+	    	if(!(currentNode instanceof DecisionNode) && !(currentNode instanceof ChanceNode) && !(currentNode.equals(node6)) && !(currentNode.equals(node9))) {
+		    	if(currentNode.equals(node3)) {
+		    		currentNode = currentNode.chooseNext(player, cerberus);
+		    	}else if(currentNode.equals(node4)) {
+		    		currentNode = currentNode.chooseNext(player, charon);
+		    	}else {
+		    		currentNode = currentNode.chooseNext(player, hades);
+		    	}
+	    		
+		    	
+		    }else {
+		    	if(currentNode.equals(node6)) {
+		    		
+		    		String rep = myObj.next();
+		    		if(rep.equals("obole")) {
+		    			player.getInventory().put(Item.OboleOfCharon, 1);
+		    		}
+		    		
+		    		currentNode = currentNode.chooseNext(player);
+		    		
+		    	}else {
+			    	currentNode = currentNode.chooseNext();
+
+		    	}
+		    }
+		   
+		    currentNode.display();
 	    }
-	   
-	    actualNode.display();
 	    
 	    myObj.close();
 

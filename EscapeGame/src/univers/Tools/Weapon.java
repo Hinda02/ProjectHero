@@ -1,4 +1,4 @@
-package univers;
+package univers.Tools;
 
 public enum Weapon {
 	

@@ -1,6 +1,8 @@
-package univers;
+package univers.persTypes;
 
 import java.util.Random;
+
+import univers.Tools.Weapon;
 
 //class inherits from Angel
 public class Demon extends Angel {

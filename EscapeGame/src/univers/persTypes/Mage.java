@@ -1,4 +1,6 @@
-package univers;
+package univers.persTypes;
+
+import univers.Tools.Weapon;
 
 //class inherits from Personage
 public class Mage extends Personage {

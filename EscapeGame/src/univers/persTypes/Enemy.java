@@ -1,10 +1,15 @@
-package univers;
+package univers.persTypes;
+
+import univers.Tools.Weapon;
+import univers.Tools.EGrade;
+
 
 //class inherits from Personage
 public class Enemy extends Personage{
 	
 	//private attribute
 	private int specialAttack = 1;
+	private EGrade grade;//look up a use for this
 	
 	/**
 	 * Constructor for class Enemy
@@ -13,10 +18,12 @@ public class Enemy extends Personage{
 	 * @param hp
 	 * @param power
 	 */
-	public Enemy(String name, Weapon weapon, int hp, int power) {
+	public Enemy(String name, Weapon weapon, EGrade grade, int hp, int power) {
 		super(name, weapon);
 		super.setHp(hp);
 		super.setPower(power);
+		this.grade = grade;
+		
 	}
 	
 	/**

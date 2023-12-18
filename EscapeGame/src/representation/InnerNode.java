@@ -9,7 +9,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import univers.Personage;
+import univers.Tools.Item;
+import univers.persTypes.Personage;
 
 public class InnerNode extends Node{
 
@@ -35,7 +36,19 @@ public class InnerNode extends Node{
 	 */
 	@Override
 	public Node chooseNext() {
-		return null;
+		return this.nodes.get(0);
+	}
+	
+	/**
+	 * For 'obole' management
+	 */
+	@Override
+	public Node chooseNext(Personage player) {
+		if(player.getInventory().containsKey(Item.OboleOfCharon)) {
+			return this.nodes.get(0);
+		}else {
+			return this.nodes.get(1);
+		}
 	}
 	
 	/**

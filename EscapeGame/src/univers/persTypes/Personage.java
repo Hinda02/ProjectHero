@@ -1,4 +1,9 @@
-package univers;
+package univers.persTypes;
+
+import univers.Tools.Weapon;
+import univers.Tools.Item;
+
+import java.util.HashMap;
 
 //class implements PersonageInterface
 public abstract class Personage implements PersonageInterface {
@@ -9,6 +14,7 @@ public abstract class Personage implements PersonageInterface {
 	private int power;
 	private Weapon weapon;
 	private boolean alive = true;
+	private HashMap<Item, Integer> inventory = new HashMap<Item, Integer>();//<Item, quantity>
 	
 	/**
 	 * Constructor for class Personage
@@ -20,6 +26,7 @@ public abstract class Personage implements PersonageInterface {
 		this.hp = 0;
 		this.power = 0;
 		this.weapon = weapon;
+		this.getInventory().put(Item.Papyrus, 1);
 	}
 	
 	/**
@@ -134,6 +141,14 @@ public abstract class Personage implements PersonageInterface {
 		}else {
 			return false;
 		}
+	}
+
+	public HashMap<Item, Integer> getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(HashMap<Item, Integer> inventory) {
+		this.inventory = inventory;
 	}
 
 }

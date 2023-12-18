@@ -1,4 +1,4 @@
-package univers;
+package univers.persTypes;
 
 /**
  * Interface that defines the mandatory methods for Personage classes
