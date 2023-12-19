@@ -1,5 +1,6 @@
 package representation;
 
+import java.util.List;
 import java.util.Scanner;
 
 //class inherits from InnerNode
@@ -14,6 +15,15 @@ public class DecisionNode extends InnerNode{
 	 */
 	public DecisionNode(int id, String description, Node n1, Node n2) {
 		super(id, description, n1, n2);
+	}
+	/**
+	 * Constructor for class DecisionNode
+	 * @param id
+	 * @param description
+	 * @param nodes
+	 */
+	public DecisionNode(int id, String description, List<Node> nodes) {
+		super(id, description, nodes);
 	}
 
 	/**

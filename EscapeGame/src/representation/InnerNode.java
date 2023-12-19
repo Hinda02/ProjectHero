@@ -30,6 +30,12 @@ public class InnerNode extends Node{
 		this.nodes.add(n2);
 		
 	}
+	public InnerNode(int id, String description, List<Node>  nodes) {
+		super(id, description);
+		for (Node node : nodes) {
+            this.nodes.add(node);
+        }
+	}
 
 	/**
 	 * Not to be used for this class!
